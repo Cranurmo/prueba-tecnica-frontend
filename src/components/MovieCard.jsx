@@ -1,14 +1,17 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  IconButton,
-} from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Card, CardContent, Typography, CardActions } from "@mui/material";
+import FavButton from "./FavButton";
+import { useDispatch } from "react-redux";
+import { setFavorite } from "../actions";
 
-const MovieCard = ({ title, director, year, about }) => {
+const MovieCard = ({ title, director, year, about, id }) => {
+  const dispatch = useDispatch();
+
+  const handleOnFavorite = ()=>{
+    dispatch(setFavorite({movieId: id}))
+  }
+
+
   return (
     <Card>
       <CardContent>
@@ -17,9 +20,7 @@ const MovieCard = ({ title, director, year, about }) => {
         </Typography>
         <Typography color="textSecondary">{about}</Typography>
         <CardActions>
-          <IconButton>
-            <FavoriteIcon />
-          </IconButton>
+          <FavButton isFavorite={true} onClick={handleOnFavorite} />
         </CardActions>
       </CardContent>
     </Card>

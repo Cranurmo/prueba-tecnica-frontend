@@ -1,17 +1,23 @@
 import "./App.css";
 import Searcher from "./components/Searcher";
 import MovieList from "./components/MovieList";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import getMovies from "./api";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading, setMovies } from "./actions";
+import { CircularProgress } from "@mui/material";
 
 function App() {
-
-  const [movies, setMovies] = useState([])
+  const movies = useSelector((state) => state.movies);
+  const loading = useSelector((state) => state.loading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const moviesRes = await getMovies()
-      setMovies(moviesRes)
+      dispatch(setLoading(true));
+      const moviesRes = await getMovies();
+      dispatch(setMovies(moviesRes));
+      dispatch(setLoading(false));
     };
 
     fetchMovies();
@@ -20,7 +26,12 @@ function App() {
   return (
     <div className="App">
       <Searcher className="searcher" variant="outlined" size="small" />
-      <MovieList movies={movies} />
+
+      {loading ? (
+        <CircularProgress style={{ marginTop: "20px" }} />
+      ) : (
+        <MovieList movies={movies} />
+      )}
     </div>
   );
 }

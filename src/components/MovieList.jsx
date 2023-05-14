@@ -17,6 +17,7 @@ const MovieList = ({ movies }) => {
                 director={movie.director}
                 year={movie.anio}
                 about={movie.descripcion}
+                id={movie.id}
               />{" "}
             </Grid>
           );
