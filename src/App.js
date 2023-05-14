@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Searcher from "./components/Searcher";
+import MovieList from "./components/MovieList";
+import { useEffect, useState } from "react";
+import getMovies from "./api";
 
 function App() {
+
+  const [movies, setMovies] = useState([])
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const moviesRes = await getMovies()
+      setMovies(moviesRes)
+    };
+
+    fetchMovies();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Searcher className="searcher" variant="outlined" size="small" />
+      <MovieList movies={movies} />
     </div>
   );
 }
