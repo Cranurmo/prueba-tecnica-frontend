@@ -1,39 +1,37 @@
-import "./App.css";
-import Searcher from "./components/Searcher";
-import MovieList from "./components/MovieList";
-import { useEffect } from "react";
-import getMovies from "./api";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setMovies } from "./actions";
-import { CircularProgress } from "@mui/material";
+import React from "react";
+import { HashRouter, Routes, Route, Link } from "react-router-dom";
+import Home from './pages/Home';
+import AddMovie from "./pages/AddMovie";
 
-function App() {
-  const movies = useSelector((state) => state.movies);
-  const loading = useSelector((state) => state.loading);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      dispatch(setLoading(true));
-      const moviesRes = await getMovies();
-      dispatch(setMovies(moviesRes));
-      dispatch(setLoading(false));
-    };
 
-    fetchMovies();
-  }, []);
-
+const NavBar = () => {
   return (
-    <div className="App">
-      <Searcher className="searcher" variant="outlined" size="small" />
-
-      {loading ? (
-        <CircularProgress style={{ marginTop: "20px" }} />
-      ) : (
-        <MovieList movies={movies} />
-      )}
-    </div>
-  );
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/addMovie">Agregar Pelicula</Link>
+        </li>
+      </ul>
+    </nav>
+  )
 }
+
+const App = () => {
+  return (
+    <>
+      <HashRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/addMovie" element={<AddMovie />} />
+        </Routes>
+      </HashRouter>
+    </>
+  );
+};
 
 export default App;

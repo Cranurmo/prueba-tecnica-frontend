@@ -1,4 +1,9 @@
-import { SET_FAVORITE, SET_LOADING, SET_MOVIES } from "../actions/types";
+import {
+  SET_FAVORITE,
+  SET_LOADING,
+  SET_MOVIES,
+  SET_POST,
+} from "../actions/types";
 
 const initialState = {
   movies: [],
@@ -25,6 +30,8 @@ export const moviesReducer = (state = initialState, action) => {
       newMoviesList[currentMovieIndex].favorite =
         !newMoviesList[currentMovieIndex].favorite;
       return { ...state, movies: newMoviesList };
+    case SET_POST:
+      return { ...state, createdMovie: action.payload };
     case SET_LOADING:
       return { ...state, loading: action.payload };
     default:

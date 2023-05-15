@@ -3,8 +3,7 @@ import MovieCard from "./MovieCard";
 import { Grid, Box } from "@mui/material";
 
 const MovieList = ({ movies }) => {
-    console.log(movies
-        )
+    
   return (
     <Box>
       <Grid container spacing={{ xs: 1, sm: 2, md: 3 }}>
